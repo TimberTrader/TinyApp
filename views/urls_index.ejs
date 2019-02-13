@@ -10,8 +10,20 @@
 </head>
 <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-<body>
-<% include ./partials/_header %>
-Hello World
-</body>
+  <body>
+    <header>
+      <% include ./partials/_header %>
+    </header>
+
+    <main>
+      <a href='#'>Create New TinyURL</a>
+      <h4>My URLs</h4>
+          <ul>
+            <% for (let shortName in urls) { %>
+                <li><%= shortName %>: <%= urls[shortName] %></li>
+            <% }; %>
+          </ul>
+    </main>
+
+  </body>
 </html>
