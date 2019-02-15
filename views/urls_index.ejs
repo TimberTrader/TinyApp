@@ -20,9 +20,12 @@
       <h4>My URLs</h4>
           <ul>
             <% for (let shortName in urls) { %>
-            <li><%= shortName %>:   <%= urls[shortName] %>
-                <form method= "POST" action= "/urls/<%= shortName %>/delete ">
-                <button type= "submit" class= "btn btn-primary">delete</button></form>
+            <li><%= shortName %>:   <%= urls[shortName].longURL %>
+              <form class = "form-inline" method= "POST" action= "/urls/<%= shortName %>/delete ">
+                <div class="form-group mb-2">
+                  <button type = "submit" class = "btn btn-primary">delete</button></form>
+                </div>
+              </form> 
             </li>
             <% }; %>
           </ul>

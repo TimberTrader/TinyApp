@@ -15,8 +15,8 @@ function generateRandomString() {
 }
 
 var urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "b2xVn2": {shortURL: "b2xVn2", longURL: "www.lighthouselabs.ca"},
+  "9sm5xK": {shortURL: "9sm5xK", longURL: "http://www.google.com"}
 };
 
 app.get('/', (req, res) => {
@@ -30,28 +30,18 @@ app.get('/urls.json', (req, res) => {
 app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
-
+unc
 app.get('/urls', (req, res) => {
     let templateVars = {urls: urlDatabase};
     res.render('urls_index', templateVars);
-});
-
-app.get('/urls/:shortURL', (req, res) => {
-    let templateVars = {
-      shortURL: req.params.shortURL,
-      longURL: urlDatabase[req.params.shortURL]
-    };
-    res.render("urls_show", templateVars);
+    console.log(urlDatabase)
 });
 
 app.post('/urls', (req, res) => {
   let shortURL = generateRandomString();
   let longURL = req.body.longURL
-  urlDatabase[shortURL] = {
-    shortURL: shortURL,
-    longURL: longURL
-  }
-  res.redirect('/urls');
+  urlDatabase[shortURL] = { shortURL, longURL }
+  res.redirect('/urls'); 
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
