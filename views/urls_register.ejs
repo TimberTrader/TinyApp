@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>register new acccount with tinyApp</title>
+  </head>
+
+  <body style=" font-size:20px; padding:50px;">
+
+ <% include ./partials/_header %>
+
+ <h4>Login to tinyApp</h4>
+    <form class = "form-inline" action ="/register" method ="POST" style = margin 20px 0>
+        <div class = "form-group mb-2">
+            <label for = "email" >Email:</label>
+            <input type = "email" name = "email" placeholder = "example@email.com" style= "width: 200px">
+        </div>
+        <br>
+        <div class = "form-group mb-2">
+            <label for = "password">Password:</label>
+            <input type = "password" name = "password" placeholder = "Password" style= "width: 200px">
+            <input class = "form-control" type = "submit" value = "Log In">
+            </div>
+        </div>
+    </form>
+  </body>
+</html>
