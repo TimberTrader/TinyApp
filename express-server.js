@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/urls.json', (req, res) => {
-  res.json(urlData);
+  res.json(userData);
 });
 
 app.get('/register', (req, res) => {
