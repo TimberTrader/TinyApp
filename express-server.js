@@ -20,7 +20,7 @@ const urlData = {
   "9sm5xK": {shortURL: "9sm5xK", longURL: "http://www.google.com"}
 };
 
-const users = { 
+const userData = { 
   "userRandomID": {
     id: "userRandomID", 
     email: "user@example.com", 
@@ -62,22 +62,20 @@ app.get('/urls', (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars =
-  { shortURL: req.params.shortURL,
-    longURL: urlData[req.params.shortURL].longURL,
-    username: req.cookies['username']
-    };
+  let templateVars =  urlData[req.params.shortURL] = { shortURL: req.params.shortURL, longURL: urlData[req.params.shortURL].longURL }
+    // username: req.cookies['username']
     res.render('urls_show', templateVars);
   });
 
 //----- all POST routes------
   
 app.post('/register', (req, res) => {
-  let  username = req.body.email;
-  let password = req.body.password;
-
-  data.users.push({username: username, password: password});
-  res.cookie('username', username ); 
+  let uID = generateRandomString();
+  userData[uID] = { id: uID,
+                  username: req.body.email,
+                  password: req.body.password
+                };
+  res.cookie('username', uID ); 
   res.redirect('/urls');
 })
 
@@ -92,10 +90,12 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
-  let shortURL = generateRandomString();
-  let longURL = req.body.longURL
-  urlData[shortURL] = { shortURL, longURL }
-  res.redirect('/urls'); 
+  app.post('/urls', (req, res) => {
+    let shortURL = generateRandomString();
+    let longURL = req.body.longURL
+    urlDatabase[shortURL] = { shortURL, longURL }
+    res.redirect('/urls'); 
+  }) 
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
