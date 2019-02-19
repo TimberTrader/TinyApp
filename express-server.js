@@ -52,7 +52,7 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.cookie('username', '')
+  res.cookie('user_id', '')
   res.render('urls_login')
 })
 
@@ -61,7 +61,7 @@ app.get('/urls/new', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  let templateVars = {urls: urlData, username: req.cookies['username']};
+  let templateVars = {urls: urlData, username: req.cookies['user_id']};
   res.render('urls_index', templateVars);
 });
 
@@ -94,20 +94,20 @@ app.post('/register', (req, res) => {
   }
   let uID = generateRandomString();
   userData[uID] = { id: uID,
-                  username: req.body.email,
+                  email: req.body.email,
                   password: req.body.password
                 };
-  res.cookie('username', uID ); 
+  res.cookie('user_id', uID ); 
   res.redirect('/urls');
 })
 
 app.post('/login', (req, res) => {
-  res.cookie('username', req.body.username);
+  res.cookie('user_id', req.body.username);
   res.redirect('/urls')
 });
 
 app.post('/logout', (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 });
 
