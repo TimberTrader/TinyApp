@@ -39,6 +39,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/urls.json', (req, res) => {
+  res.json(urlData);
+});
+
+app.get('/users.json', (req, res) => {
   res.json(userData);
 });
 
@@ -70,6 +74,24 @@ app.get('/urls/:shortURL', (req, res) => {
 //----- all POST routes------
   
 app.post('/register', (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    const templateVars = { errCode: 400, errMsg: 'please, enter an email AND a  password'};
+    res.status(400);
+    res.render('error', templateVars);
+    return;
+  } else {
+    for (let id in userData) {
+      if (userData[id].email === req.body.email) {
+        const temaplateVars = {
+          errCode: 400,
+          errMessage: 'email address has already been registered as a username, please try another address'
+        }
+          res.status(400);
+          res.render('error', templateVars);
+          return;
+        }
+    }
+  }
   let uID = generateRandomString();
   userData[uID] = { id: uID,
                   username: req.body.email,
