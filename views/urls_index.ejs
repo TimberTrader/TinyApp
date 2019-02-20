@@ -23,14 +23,12 @@
           <% for (let shortName in urls) { %>
           <li><%= shortName %>:   <%= urls[shortName].longURL %>
             <form class = "form-inline" method= "POST" action= "/urls/<%= shortName %>/delete ">
-              <div class="form-group mb-2">
+              <!--<div class="form-group mb-2">-->
                 <button type = "submit" class = "btn btn-primary">delete</button></form>
-            <form class = "form-inline" method= "GET" action= "//urls/:<%= shortName %>/edit">
-              <div class="form-group mb-2">
+            <form class = "form-inline" method= "GET" action= "/urls/<%= shortName %>">
+              <!--<div class="form-group mb-2">-->
                 <button type = "submit" class = "btn btn-primary">edit</button></form>
-              </div>
-
-              </form> 
+            </form> 
             </li>
             <% }; %>
           </ul>
