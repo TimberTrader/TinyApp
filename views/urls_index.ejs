@@ -16,7 +16,7 @@
     </header>
 
     <main>
-      <a href='#'>Create New TinyURL</a>
+      <a href='/new'>Create New TinyURL</a>
       <h4>My URLs</h4>
           <ul>
           <% for (let shortName in urls) { %>
@@ -24,6 +24,7 @@
             <form class = "form-inline" method= "POST" action= "/urls/<%= shortName %>/delete ">
               <div class="form-group mb-2">
                 <button type = "submit" class = "btn btn-primary">delete</button></form>
+                <button type = "submit" class = "btn btn-primary">edit</button></form>
               </div>
 
               </form> 
@@ -34,3 +35,4 @@
 
   </body>
 </html>
+
