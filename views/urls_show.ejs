@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+  <body style=" font-size:20px; padding:50px;">
   <body>
-    <header>
-      <% include ./partials/_header %>
-    </header>
+    
+      <%- include("./partials/_header.ejs", {user: user}) %>
+   
     <main>
     <a href='#'>Create New TinyURL</a>
     <form class="form-inline" action="/urls" method="POST">

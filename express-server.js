@@ -68,7 +68,11 @@ app.get('/users.json', (req, res) => {
 
 //----- register new user ------
 app.get('/register', (req, res) => {
-  res.render('urls_register');
+  let templateVars = {
+    user: userData[req.cookies.user_id],
+    urls: urlsForUser(req.cookies.user_id)
+  }
+  res.render('urls_register', templateVars);
 });
 
 app.post('/register', (req, res) => {
@@ -105,8 +109,11 @@ app.post('/register', (req, res) => {
 
 //----- allow user to login -----
 app.get('/login', (req, res) => {
-  res.cookie('user_id', '')
-  res.render('urls_login')
+  let templateVars = {
+    user: userData[req.cookies.user_id],
+    urls: urlsForUser(req.cookies.user_id)
+  }
+  res.render('urls_login', tempaleVars )
 });
 
 app.post('/login', (req, res) => {
@@ -115,11 +122,9 @@ app.post('/login', (req, res) => {
     if ((userData[id].email === req.body.email) && (userData[id].password === req.body.password)) {
       userMatch = true;
       res.cookie('user_id', userData[id]);
-      console.log(userMatch)
       // res.redirect('/urls');
     }
   }
-  console.log(userMatch)
 
   if (userMatch) {
     res.redirect('/urls');
@@ -137,8 +142,12 @@ app.post('/login', (req, res) => {
 
 //---- main page showing all urls created ------
 app.get('/urls', (req, res) => {
-  if (res.cookie) {
-  res.render('urls_index', urlsForUser(req.cookies.user_id.id));
+  if (req.cookies.user_id) {
+    let templateVars = {
+      user: userData[req.cookies.user_id],
+      urls: urlsForUser(req.cookies.user_id)
+    };
+  res.render('urls_index', templateVars);
  } else {
    res.redirect('/login');
  }
@@ -146,19 +155,35 @@ app.get('/urls', (req, res) => {
 
 //----- delete url entry from main page ----
 app.post('/urls/:shortURL/delete', (req, res) => {
-  if (res.cookie) {
+  if (req.cookies.user_id) {
   delete urlData[req.params.shortURL];
-  res.render('urls_index', urlsForUser(req.cookies.user_id.id));
+  let templateVars = {
+    user: userData[req.cookies.user_id],
+    urls: urlsForUser(req.cookies.user_id)
+  };
+  res.render('urls_index', templateVars);
   } else {
   res.redirect('/login');
   }
 });
 
 //----- edit url entry from main page ----
+app.get('/urls/:shortname', (req, res) => {
+  if (req.cookies.user_id) {
+      let templateVars = {
+        user: userData[req.cookies.user_id],
+        urls: urlsForUser(req.cookies.user_id)
+      };
+      res.render('urls_show', templateVars);
+  } else {
+    res.redirect('/login');
+  }
+});
+
 app.post('/urls/:shortURL/edit', (req, res) => {
-  if (res.cookie) {
-   urlData[req.params.shortURL];
-  res.redirect('/urls');
+  if (req.cookies.user.id) {
+    delete urlData[req.params.shortURL];
+    res.redirect('/urls');
   } else {
     res.redirect('/login');
   }
@@ -167,8 +192,12 @@ app.post('/urls/:shortURL/edit', (req, res) => {
 //----- create new shortURL from long URL -----
 app.get('/new', (req, res) => {
   for (let id in userData) {
-    if (res.cookie) {
-      res.render('urls_new');
+    if (req.cookies.user.id) {
+      let templateVars = {
+        user: userData[req.cookies.user_id],
+        urls: urlsForUser(req.cookies.user_id)
+      };
+      res.render('urls_new', templateVars);
     } else {
       res.redirect('/login');
     }
@@ -176,11 +205,10 @@ app.get('/new', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
-  if (res.cookie) {
+  if (req.cookies.user_id) {
     let shortURL = generateRandomString();
     let longURL = req.body.longURL;
     let id = req.cookies['user_id'].id
-    urlData[shortURL] = { shortURL, longURL, id }
     res.redirect('/urls');
   } else {
     res.redirect('/login');
@@ -189,7 +217,10 @@ app.post('/urls', (req, res) => {
 
 // ---- display longURL from shortURL -----
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars =  urlData[req.params.shortURL] = { shortURL: req.params.shortURL, longURL: urlData[req.params.shortURL].longURL }
+  let templateVars = {
+    user: userData[req.cookies.user_id],
+    urls: urlsForUser(req.cookies.user_id)
+  };
   res.render('urls_show', templateVars);
 });
 

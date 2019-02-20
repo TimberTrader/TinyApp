@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-</head>
 <header>
   <h3> TinyApp </h3>
    <div style= "margin-bottom: 20px;">
-      <% if (!locals.uID) { %>
+      <% if (!user) { %>
         <form method= "GET" action= "/register" style= "display: inline-block;">
           <input class= "form-group mb-2" type= "submit" value= "Register">
         </form>
@@ -21,7 +12,7 @@
         <form method= "POST" action= "/logout" style= "display: inline-block;">
           <input class= "form-group mb-2" type= "submit" value= "Log Out">
         </form>
-        <h3>Logged in as: &nbsp;<span style= "font-weight: normal;"> <%= email %></span></h3>
+        <h3>Logged in as: &nbsp;<span style= "font-weight: normal;"> <%= user.email %></span></h3>
        <% } %>
     </div>
 </header>

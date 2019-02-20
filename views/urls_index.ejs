@@ -8,12 +8,13 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
+
 <body style="font-size:20px; padding:50px;">
-    <!-- Add EJS code here -->
+  
+<!-- Add EJS code here -->
+  
   <body>
-    <header>
-      <% include ./partials/_header %>
-    </header>
+    <%- include("./partials/_header.ejs", {user: user}) %>
 
     <main>
       <a href='/new'>Create New TinyURL</a>
@@ -24,6 +25,8 @@
             <form class = "form-inline" method= "POST" action= "/urls/<%= shortName %>/delete ">
               <div class="form-group mb-2">
                 <button type = "submit" class = "btn btn-primary">delete</button></form>
+            <form class = "form-inline" method= "GET" action= "//urls/:<%= shortName %>/edit">
+              <div class="form-group mb-2">
                 <button type = "submit" class = "btn btn-primary">edit</button></form>
               </div>
 

@@ -10,8 +10,8 @@
   </head>
 
   <body style=" font-size:20px; padding:50px;">
-
- <% include ./partials/_header %>
+  
+  <%- include("./partials/_header.ejs", {user: user}) %>
 
  <h4>Login to tinyApp</h4>
     <form class = "form-inline" action ="/login" method ="POST" style = margin 20px 0>
