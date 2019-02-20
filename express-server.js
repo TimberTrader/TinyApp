@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-/* const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
+const bcrypt = require('bcrypt');
+/*
 was unable to test this above due to errors
 arising from the install of 'bcrypt@2.0.0' */
 var cookieSession = require('cookie-session')
@@ -37,31 +38,9 @@ function urlsForUser(uID) {
 };
 
 //------ user and url database (linked by user_id) -----
-const urlData = {
-  "b2xVn2": {
-    shortURL: "b2xVn2",
-    longURL: "http://www.lighthouselabs.ca",
-    id: "user_id"
-    },
-  "9sm5xK": {
-    shortURL: "9sm5xK",
-    longURL: "http://www.google.com",
-    id: "user_id"
-  }
-};
+const urlData = {};
 
-const userData = { 
-  "userRandomID": {
-    id: "userRandomID", 
-    email: "user@example.com", 
-    password: "purple"
-  },
- "user2RandomID": {
-    id: "user2RandomID", 
-    email: "user2@example.com", 
-    password: "funk"
-  }
-};
+const userData = {};
 
  // ----- misc. GET routes -----
 app.get('/u/:shortURL', (req, res) => {
@@ -107,17 +86,20 @@ app.post('/register', (req, res) => {
     return;
     }
   };
-  // let hashPwd = bcrypt.hashSync(req.body.password, 10);
-  /* was unable to test this above due to errors
-  arising from the install of 'bcrypt@2.0.0' */
-  let uID = generateRandomString();
-    userData[uID] = { id: uID,
-    email: req.body.email,
-    password: req.body.password
+  
+    let hashPwd = bcrypt.hashSync(req.body.password, 10);
+    /* NOW able to test this above due to errors
+    arising from the install of 'bcrypt@2.0.0' */
+    // let uID = generateRandomString();
+    let uID = generateRandomString();
+    userData[uID] = {
+      id: uID,
+      email: req.body.email,
+      password: hashPwd
+      };
+    req.session.user_id = uID; 
+    res.redirect('/urls');
   };
-  req.session.user_id = uID; 
-  res.redirect('/urls');
- };
 });
 
 //----- allow user to login -----
@@ -132,7 +114,8 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   let userMatch = null
   for (let id in userData) {
-    if ((userData[id].email === req.body.email) && (userData[id].password === req.body.password)) {
+    // if ((userData[id].email === req.body.email) && (userData[id].password === req.body.password)) {
+    if ((userData[id].email === req.body.email) && bcrypt.compareSync(req.body.password, userData[id].password)) {
       /* bcrypt.compareSync(req.body.password, userData[id].password) should replace
       (userData[id].password === req.body.password) in the above conditional ____
       was unable to test this above due to errors arising from the install of 'bcrypt@2.0.0' */
