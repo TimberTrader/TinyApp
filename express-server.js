@@ -8,7 +8,6 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 var cookieSession = require('cookie-session')
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 // app.use(cookieParser());
 app.set('view engine', 'ejs')
