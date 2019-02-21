@@ -3,6 +3,8 @@ const app = express();
 const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 // const cookieParser = require("cookie-parser");
+
+// NOW able to asuccesfully use bcrypt
 const bcrypt = require('bcrypt');
 var cookieSession = require('cookie-session')
 
@@ -27,7 +29,6 @@ function generateRandomString() {
 function urlsForUser(uID) {
   let userUrls = {};
   for (let url in urlData) {
-    // let shortUrl = urlData[url].shortURL;
     if (urlData[url].id === uID)
       userUrls[url] = urlData[url];
   }
@@ -84,8 +85,8 @@ app.post('/register', (req, res) => {
     }
   };
   
+  // NOW able to encrypt passwords
     let hashPwd = bcrypt.hashSync(req.body.password, 10);
-    // NOW able to test this asuccesfully bove due to errors
   
     // let uID = generateRandomString();
     let uID = generateRandomString();
