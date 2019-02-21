@@ -4,9 +4,6 @@ const PORT = 8080; // default port 8080
 const bodyParser = require("body-parser");
 // const cookieParser = require("cookie-parser");
 const bcrypt = require('bcrypt');
-/*
-was unable to test this above due to errors
-arising from the install of 'bcrypt@2.0.0' */
 var cookieSession = require('cookie-session')
 
 
@@ -88,8 +85,8 @@ app.post('/register', (req, res) => {
   };
   
     let hashPwd = bcrypt.hashSync(req.body.password, 10);
-    /* NOW able to test this above due to errors
-    arising from the install of 'bcrypt@2.0.0' */
+    // NOW able to test this asuccesfully bove due to errors
+  
     // let uID = generateRandomString();
     let uID = generateRandomString();
     userData[uID] = {
@@ -114,11 +111,8 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   let userMatch = null
   for (let id in userData) {
-    // if ((userData[id].email === req.body.email) && (userData[id].password === req.body.password)) {
+    
     if ((userData[id].email === req.body.email) && bcrypt.compareSync(req.body.password, userData[id].password)) {
-      /* bcrypt.compareSync(req.body.password, userData[id].password) should replace
-      (userData[id].password === req.body.password) in the above conditional ____
-      was unable to test this above due to errors arising from the install of 'bcrypt@2.0.0' */
       userMatch = true;
       req.session.user_id = userData[id].id;
       res.redirect('/urls');
